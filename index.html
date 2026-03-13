@@ -2,36 +2,38 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Friend Schedule</title>
+<title>April Meeting Schedule</title>
 
 <style>
 
 body{
-    font-family: Arial;
-    text-align:center;
+font-family: Arial;
+text-align:center;
 }
 
 table{
-    border-collapse: collapse;
-    margin:auto;
+border-collapse: collapse;
+margin:auto;
 }
 
-td,th{
-    border:1px solid black;
-    padding:10px;
-    width:80px;
+th,td{
+border:1px solid black;
+padding:8px;
+width:70px;
+height:35px;
+font-size:12px;
 }
 
 .free{
-    background-color:lightgreen;
+background-color:lightgreen;
 }
 
 .busy{
-    background-color:#ff6b6b;
+background-color:#ff6b6b;
 }
 
 .maybe{
-    background-color:khaki;
+background-color:khaki;
 }
 
 </style>
@@ -40,57 +42,81 @@ td,th{
 
 <body>
 
-<h1>Friend Meeting Schedule</h1>
+<h1>Meeting Schedule (April)</h1>
 
-<input id="nameInput" placeholder="Enter your name">
+<input id="nameInput" placeholder="Enter name">
 <button onclick="addUser()">Add</button>
 
 <br><br>
 
 <table id="schedule">
 
-<tr>
+<tr id="header">
 <th>Name</th>
-<th>Mon</th>
-<th>Tue</th>
-<th>Wed</th>
-<th>Thu</th>
-<th>Fri</th>
 </tr>
 
 </table>
 
 <script>
 
+// สร้างวันที่ 1-30 เมษายน
+const days = []
+
+for(let i=1;i<=30;i++){
+days.push("Apr "+i)
+}
+
+// สร้างหัวตาราง
+let header=document.getElementById("header")
+
+days.forEach(day=>{
+let th=document.createElement("th")
+th.innerText=day
+header.appendChild(th)
+})
+
 function addUser(){
 
-    let name = document.getElementById("nameInput").value
-    let table = document.getElementById("schedule")
+let name=document.getElementById("nameInput").value
 
-    let row = table.insertRow()
+if(name=="") return
 
-    let nameCell = row.insertCell()
-    nameCell.innerHTML = name
+let table=document.getElementById("schedule")
 
-    for(let i=0;i<5;i++){
+let row=table.insertRow()
 
-        let cell = row.insertCell()
+let nameCell=row.insertCell()
 
-        cell.onclick=function(){
+nameCell.innerText=name
 
-            if(cell.className=="free"){
-                cell.className="busy"
-            }
-            else if(cell.className=="busy"){
-                cell.className="maybe"
-            }
-            else{
-                cell.className="free"
-            }
+for(let i=0;i<days.length;i++){
 
-        }
+let cell=row.insertCell()
 
-    }
+cell.onclick=function(){
+
+if(cell.className=="free"){
+
+cell.className="busy"
+cell.innerText="ไม่ว่าง"
+
+}
+else if(cell.className=="busy"){
+
+cell.className="maybe"
+cell.innerText="ไม่แน่ใจ"
+
+}
+else{
+
+cell.className="free"
+cell.innerText="ว่าง"
+
+}
+
+}
+
+}
 
 }
 
